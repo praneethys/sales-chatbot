@@ -1,0 +1,5 @@
+bundle_name,Price,marketing_tag_line,Access,no_of_videos,min_grade,max_grade,dynamic_math_book_included,has_special_price_for_extra_books,access_to_new_resources,is_curriculum_aligned
+monthly,$9.95,"Flexible, afforadable",lifetime,450,4,10,No,no,yes,yes
+6-month,$49.95,Great value,lifetime,450,4,10,no,no,yes,yes
+annual,$79.95,Most popular,lifetime,450,4,10,no,no,yes,yes
+Complete,$99.00,Best value,1 year,450,4,10,yes,yes,yes,yes
