@@ -21,18 +21,22 @@ load_dotenv(find_dotenv())  # read local .env file
 
 class LLM:
     def __init__(self) -> None:
-        # self.huggingface_repo_id = 'decapoda-research/llama-7b-hf'
-        self.huggingface_repo_id = 'bigscience/bloom'
+        # self.huggingface_repo_id = 'decapoda-research/llama-7b-hf' # model keeps timing out
+        # self.huggingface_repo_id = 'mosaicml/mpt-7b-chat' # model times out
+        self.huggingface_repo_id = 'bigscience/bloom' # works
+
         self.huggingface_api_token = getenv('HUGGINGFACEHUB_API_TOKEN')
 
         environ['HUGGINGFACEHUB_API_TOKEN'] = self.huggingface_api_token
-        environ['TRANSFORMERS_OFFLINE'] = '1'
 
+        # List of all tasks can be found here: https://github.com/huggingface/hub-docs/blob/main/tasks/src/const.ts
         self.llm = HuggingFaceHub(repo_id=self.huggingface_repo_id,
                                   huggingfacehub_api_token=self.huggingface_api_token,
                                   verbose=True
                                   )
-        self.conversation_memory = ConversationBufferMemory(return_messages=True)
+        self.conversation_memory = ConversationBufferMemory(return_messages=True,
+                                                            memory_key='chat_history', 
+                                                            input_key='question')
 
     def init_conversation_retrieval_chain(self, data: List[Document]) -> ConversationalRetrievalChain:
         embeddings = HuggingFaceHubEmbeddings(
@@ -64,7 +68,7 @@ class LLM:
         chain = ConversationalRetrievalChain.from_llm(llm=self.llm,
                                                       retriever=vectorstore.as_retriever(),
                                                       verbose=True,
-                                                    #   memory=self.conversation_memory,
+                                                      memory=self.conversation_memory,
                                                     #   condense_question_prompt=prompt
                                                       )
 
