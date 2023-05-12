@@ -1,4 +1,7 @@
 # Sales bot
+## NOTE
+This repo is just a quick POC developed in a few hours and needs a lot more work.
+
 ### Tools and Technologies
 * [Langchain](https://github.com/hwchase17/langchain/blob/master/docs/getting_started/getting_started.md)
 * [Bloom LLM](https://huggingface.co/bigscience/bloom)
